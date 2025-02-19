@@ -3,6 +3,7 @@
 To put learned RL concepts (such as Markov decision process, state/action spaces, Q-function for state-action values, and V-function for state values) into practice, I implemented the value iteration algorithm for the Frozen Lake environment. Since gymnasium's FrozenLake environment required agentic behaviour, for the purposes of value iteration I implemented the environment myself. 
 
 ![Frozen Lake Animation](frozen_lake.gif)
+![Value Iteration](out.png)
 
 
 
