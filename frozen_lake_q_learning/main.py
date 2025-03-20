@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 seed = 0  # Random number generator seed
 gamma = 0.95  # Discount factor
-num_iters = 256  # Number of iterations
+num_iters = 300  # Number of iterations
 alpha   = 0.9  # Learing rate
 epsilon = 0.9  # Epsilon in epsilion gready algorithm
 random.seed(seed)  # Set the random seed
@@ -15,7 +15,9 @@ np.random.seed(seed)
 env = gym.make('FrozenLake-v1',
                     desc=None,
                     map_name="4x4",
-                    is_slippery=False)
+                    is_slippery=False,
+                    render_mode="human")
+env.metadata['render_fps'] = 90
 
 observation, info = env.reset()
 num_states = env.observation_space.n
@@ -34,9 +36,14 @@ V  = np.zeros((num_iters + 1, num_states))
 pi = np.zeros((num_iters + 1, num_states))
 
 for k in range(1, num_iters + 1):
+    # Decay epsilon (exploration rate)
+    if k >256:
+        epsilon=0.3
     # Reset environment
     state, done = env.reset(), False
     state=state[0]
+    print(f"\rIteration: {k}/{num_iters}", end="")
+
     while not done:
         # Select an action for a given state and acts in env based on selected action
         action = e_greedy(env, Q, state, epsilon)
@@ -53,12 +60,10 @@ for k in range(1, num_iters + 1):
         V[k,s]  = np.max(Q[s,:])
         pi[k,s] = np.argmax(Q[s,:])
 
-terminal_states = [5,7,11,12,15]
     
 # Value function subplot
 V_grid = V[k,:].reshape(4,4)
 im = plt.imshow(V_grid, cmap='viridis')
-
 # Add policy arrows
 for i in range(4):
     for j in range(4):
