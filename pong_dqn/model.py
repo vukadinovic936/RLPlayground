@@ -7,7 +7,7 @@ class PongModel(torch.nn.Module):
         self.conv1 = torch.nn.Conv2d(4, 16, kernel_size=8, stride=4)
         self.conv2 = torch.nn.Conv2d(16, 32, kernel_size=4, stride=2)
         self.fc1 = torch.nn.Linear(9*9*32, 256)
-        self.fc2 = torch.nn.Linear(256, 4)
+        self.fc2 = torch.nn.Linear(256, 3)
         self.relu = torch.nn.ReLU()
 
     def forward(self, x):
@@ -23,7 +23,7 @@ class PongModel(torch.nn.Module):
         # now x is 256
         x = self.relu(x)
         x = self.fc2(x)
-        # now x is 4
+        # now x is 3
         return x
 if __name__ == "__main__":
     model = PongModel()

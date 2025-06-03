@@ -1,6 +1,7 @@
 import gymnasium as gym
 import numpy as np
 from model import PongModel
+import matplotlib.pyplot as plt
 
 # Create the Pong environment
 env = gym.make("Pong-v4", render_mode="human")
@@ -18,7 +19,7 @@ while True:
     while not terminated and not truncated:
         # Render the game
         env.render()
-        
+
         # Get action from keyboard (0: NOOP, 2: UP, 3: DOWN)
         action = int(input("Enter action (0: NOOP, 2: UP, 3: DOWN): "))
         
