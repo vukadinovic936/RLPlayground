@@ -2,11 +2,12 @@ import gymnasium as gym
 import numpy as np
 from model import PongModel
 import matplotlib.pyplot as plt
-
+import torch
 # Create the Pong environment
+#device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 env = gym.make("Pong-v4", render_mode="human")
-replay_memory = np.zeros((1_000_000, 210, 160, 3))
-Q = PongModel()
+#Q = PongModel().to(device)
+#Q.load_state_dict(torch.load('dqn_checkpoint_episode_500.pth',weights_only=False)['model_state_dict'])
 # Game loop
 while True:
     # Reset the environment
@@ -25,9 +26,9 @@ while True:
         
         # Take action in environment
         observation, reward, terminated, truncated, info = env.step(action)
-    
+        print(reward)
+
     if input("Play again? (y/n): ").lower() != 'y':
         break
-
 env.close()
 
